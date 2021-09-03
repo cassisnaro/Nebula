@@ -67,12 +67,15 @@ void JunctionKmerExtractor::preprocess_junction_kmers() {
         kmers[*it] = unordered_map<uint64_t, Kmer>() ;
     }
     int n = 0 ;
+    cout << "kmers map created" << endl ;
+    cout << "doing with threads = " << threads << endl ;
     #pragma omp parallel for num_threads(threads)
     for (int i = 0; i < bed_tracks.size(); i++) {
         auto track = bed_tracks[i] ;
         //if (track.get_name() != "INS@chr21_25310099_25310100") {
         //    continue ;
         //}
+        cout << "retrieved track " << track << endl ;
         int t = omp_get_thread_num() ;
         //cout << bed_tracks[i].get_name() << std::endl ;
         std::unordered_map<uint64_t, Kmer> absent_kmers ;
@@ -80,15 +83,17 @@ void JunctionKmerExtractor::preprocess_junction_kmers() {
         bool first_batch = true ;
         for (int j = 0; j < tracks.size(); j++){
             auto _kmers = extract_junction_kmers(track, t, j) ;
-            //cout << _kmers.size() << endl ;
+            cout << _kmers.size() << endl ;
             if (tracks[j].find(track) == tracks[j].end() || tracks[j].find(track)->first.genotype == "0/0" || tracks[j].find(track)->first.genotype == "./.") {
-                //cout << "absent" << endl ;
+                cout << "absent" << endl ;
                 absent_kmers.insert(_kmers.begin(), _kmers.end()) ;
+                cout << "retrieved track " << track << endl ;
             } else {
-                //cout << "present" << endl ;
+                cout << "present" << endl ;
                 if (first_batch) {
                     first_batch = false ;
                     present_kmers.insert(_kmers.begin(), _kmers.end()) ;
+                    cout << "retrieved first batch " << endl ;
                 } else {
                     auto kmer = present_kmers.begin() ;
                     while (kmer != present_kmers.end()) {
@@ -98,11 +103,12 @@ void JunctionKmerExtractor::preprocess_junction_kmers() {
                             kmer++ ;
                         }
                     }
+                    cout << "retrieved non first batch " << endl ;
                 } 
             }
         }
-        //cout << "Opposing kmers: " << absent_kmers.size() << endl ;
-        //cout << "Supporting kmers:" << present_kmers.size() << endl ;
+        cout << "Opposing kmers: " << absent_kmers.size() << endl ;
+        cout << "Supporting kmers:" << present_kmers.size() << endl ;
         for (auto kmer = present_kmers.begin(); kmer != present_kmers.end(); kmer++){
             if (absent_kmers.find(kmer->first) == absent_kmers.end()) {
                 kmers[track][kmer->first] = kmer->second ;
