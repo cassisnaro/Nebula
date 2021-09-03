@@ -111,7 +111,9 @@ std::vector<Track> load_tracks_from_file(string path) {
                 _chrom = "chr" + _chrom ;
             } 
             track.chrom = get_chromosome_index(_chrom) ;
+            cout << "loading begin" << endl ;
             track.begin = std::stoi(tokens[1]) ;
+            cout << "loading end" << endl ;
             track.end = std::stoi(tokens[2]) ;
             if (header.find("SEQ") != header.end()) {
                 track.seq = tokens[header["SEQ"]] ;
@@ -128,6 +130,7 @@ std::vector<Track> load_tracks_from_file(string path) {
                 track.svtype = SVTYPE_DEL ; 
             }
             if (header.find("SVLEN") != header.end()) {
+                cout << "loading svlen" << endl ;
                 track.svlen = abs(std::stoi(tokens[header["SVLEN"]])) ;
             } else {
                 // calculate SVLEN based on other parameters
@@ -137,6 +140,7 @@ std::vector<Track> load_tracks_from_file(string path) {
                     track.svlen = track.seq.length() ;
                 }
             }
+            cout << "loaded tracks: " <<track.chrom << endl ;
             tracks.push_back(track) ;
         }
     }
