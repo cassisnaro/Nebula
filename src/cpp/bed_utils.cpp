@@ -41,6 +41,8 @@ uint8_t get_chromosome_index(string chrom) {
     if (ch == "Y") {
         return 23 ;
     }
+    cout << "trying to translate" << ch << endl ;
+    cout << "obtaining" << std::stoi(ch) << endl ;
     return std::stoi(ch) ;
 }
 
@@ -109,7 +111,8 @@ std::vector<Track> load_tracks_from_file(string path) {
             string _chrom = tokens[0] ;
             if (_chrom.substr(0, 3) != "chr") {
                 _chrom = "chr" + _chrom ;
-            } 
+            }
+            cout << "loading _chrom" << _chrom << endl;
             track.chrom = get_chromosome_index(_chrom) ;
             cout << "loading begin" << endl ;
             track.begin = std::stoi(tokens[1]) ;
@@ -140,7 +143,7 @@ std::vector<Track> load_tracks_from_file(string path) {
                     track.svlen = track.seq.length() ;
                 }
             }
-            cout << "loaded tracks: " <<track.chrom << endl ;
+            cout << "loaded tracks: " << (int)track.chrom << endl ;
             tracks.push_back(track) ;
         }
     }
