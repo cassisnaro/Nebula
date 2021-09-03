@@ -75,9 +75,9 @@ void JunctionKmerExtractor::preprocess_junction_kmers() {
         //if (track.get_name() != "INS@chr21_25310099_25310100") {
         //    continue ;
         //}
-        cout << "retrieved track " << track << endl ;
+        cout << "retrieved track " << track.get_name() << endl ;
         int t = omp_get_thread_num() ;
-        //cout << bed_tracks[i].get_name() << std::endl ;
+        cout << bed_tracks[i].get_name() << std::endl ;
         std::unordered_map<uint64_t, Kmer> absent_kmers ;
         std::unordered_map<uint64_t, Kmer> present_kmers ;
         bool first_batch = true ;
