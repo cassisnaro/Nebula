@@ -87,7 +87,7 @@ void JunctionKmerExtractor::preprocess_junction_kmers() {
             if (tracks[j].find(track) == tracks[j].end() || tracks[j].find(track)->first.genotype == "0/0" || tracks[j].find(track)->first.genotype == "./.") {
                 cout << "absent" << endl ;
                 absent_kmers.insert(_kmers.begin(), _kmers.end()) ;
-                cout << "retrieved track " << track << endl ;
+                cout << "retrieved track " << endl ;
             } else {
                 cout << "present" << endl ;
                 if (first_batch) {
@@ -104,7 +104,7 @@ void JunctionKmerExtractor::preprocess_junction_kmers() {
                         }
                     }
                     cout << "retrieved non first batch " << endl ;
-                } 
+                }
             }
         }
         cout << "Opposing kmers: " << absent_kmers.size() << endl ;
