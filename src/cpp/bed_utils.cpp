@@ -41,8 +41,8 @@ uint8_t get_chromosome_index(string chrom) {
     if (ch == "Y") {
         return 23 ;
     }
-    cout << "trying to translate" << ch << endl ;
-    cout << "obtaining" << std::stoi(ch) << endl ;
+    //cout << "trying to translate" << ch << endl ;
+    //cout << "obtaining" << std::stoi(ch) << endl ;
     return std::stoi(ch) ;
 }
 

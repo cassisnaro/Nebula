@@ -73,10 +73,12 @@ void Genotyper::run() {
 
 void Genotyper::load_kmers() {
     auto c = Configuration::getInstance() ;
-    cout << "loading gc kmers.." << endl ;
+    cout << "loading gc kmers.. " << c->gc_kmers << endl ;
     ifstream json_file(c->gc_kmers) ;
     nlohmann::json kmers_json ;
+    cout << "dumping file into kmers_json"<< endl ;
     json_file >> kmers_json ;
+    cout << "dumped file into kmers_json"<< endl ;
     for (nlohmann::json::iterator kmer = kmers_json.begin(); kmer != kmers_json.end(); kmer++) {
         uint64_t k = encode_kmer(canonicalize(kmer.key()).c_str()) ;
         Kmer _kmer ;
